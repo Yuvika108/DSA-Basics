@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int solve(){
+    string s;
+    cin >> s;
+    
+    int n=s.length();
+    
+    int min_removals = n;
+    
+    vector<string> targets = {"00", "25", "50", "75"};
+    
+    for(string t: targets){
+        int pos1=-1;
+        int pos2=-1;
+        
+        for(int i=n-1; i>=0; i--){
+            if(s[i]==t[1]){
+                pos2=i;
+                for(int j=i-1; j>=0; j--){
+                    if(s[j]==t[0]){
+                        pos1=j;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        if(pos1!=-1 && pos2!=-1){
+            int removals=(n-1-pos2)+(pos2-pos1-1);
+            min_removals = min(min_removals, removals);
+        }
+    }
+    return min_removals;
+}
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int t;
+    cin >> t;
+    
+    while(t--){
+        cout << solve() << "\n";
+    }
+    
+    return 0;
+}
