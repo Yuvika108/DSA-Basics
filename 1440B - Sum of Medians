@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void solve(){
+    int n,k;
+    if(!(cin >> n >> k)) return;
+    int total_element = n*k;
+    
+    vector<long long> a(total_element);
+    for(int i=0; i<total_element; i++){
+        cin >> a[i];
+    }
+    
+    int m = (n+1)/2;
+    
+    int gap = n-m;
+    long long sum_median = 0;
+    
+    int current_idx = total_element-1-gap;
+    
+    for(int i=0; i<k; i++){
+        sum_median += a[current_idx];
+        current_idx -= (gap+1);
+    }
+    
+    cout << sum_median << "\n";
+}
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int t;
+    cin >> t;
+    
+    while(t--){
+        solve();
+    }
+    
+    return 0;
+}
