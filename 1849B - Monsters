@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <algorithm>
+
+using namespace std;
+
+void solve() {
+    int n;
+    long long k;
+    cin >> n >> k;
+    
+    // Pair elements: {remaining_health, 1-based index}
+    vector<pair<long long, int>> monsters(n);
+    
+    for (int i = 0; i < n; i++) {
+        long long hp;
+        cin >> hp;
+        hp %= k;
+        if (hp == 0) hp = k; // A health multiple of k effectively behaves as k
+        
+        monsters[i] = {hp, i + 1};
+    }
+    
+    // Sort based on the custom logic
+    sort(monsters.begin(), monsters.end(), [](const pair<long long, int>& a, const pair<long long, int>& b) {
+        if (a.first != b.first) {
+            return a.first > b.first; // Higher remaining health comes first
+        }
+        return a.second < b.second;   // Smaller index breaks ties
+    });
+    
+    // Print the result
+    for (int i = 0; i < n; i++) {
+        cout << monsters[i].second << (i == n - 1 ? "" : " ");
+    }
+    cout << "\n";
+}
+
+int main() {
+    // Fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
