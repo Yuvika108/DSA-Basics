@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void solve(){
+    int n,k;
+    cin >> n >> k;
+    
+    vector<int> a(n);
+    int even_cnt=0;
+    int min_ops = k;
+    
+    for(int i=0; i<n; i++){ 
+        cin >> a[i];
+        if(a[i]%2==0){ 
+            even_cnt++;
+        }
+        int rem = a[i]%k;
+        if(rem==0){
+            min_ops=0;
+        }else{
+            min_ops=min(min_ops, k-rem);
+        }
+    }
+    
+    if(k==4){
+        int base_4_ops=2;
+        if(even_cnt >= 2){  
+            base_4_ops=0;
+        }else if(even_cnt == 1){  
+            base_4_ops=1;
+        }
+        
+        min_ops=min(min_ops, base_4_ops);
+    }
+    
+    cout << min_ops << "\n";
+}
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int t;
+    cin >> t;
+    
+    while(t--){
+        solve();
+    }
+    
+    return 0;
+}
