@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void solve(){
+    int n, m;
+    cin >> n >> m;
+
+    vector<int> freq(m+1, 0);
+    for(int i=0; i<n; i++){ 
+        int x;
+        cin >> x;
+        freq[x]++;
+    }
+
+    vector<int> suffix(m+2, 0);
+
+    for(int i=m; i>=0; i--){ 
+        suffix[i] = suffix[i+1] + freq[i];
+    }
+
+    int ans = 0;
+    for (int x = 1; x <= m; x++) {
+        int cur = freq[x];
+        cur += suffix[x + 1];
+
+        if (2 * x <= m) {
+            cur += freq[2 * x];
+        }
+
+        ans = max(ans, cur);
+    }
+
+    cout << ans << '\n';
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t;
+    cin >> t;
+
+    while(t--){
+        solve();
+    }
+
+    return 0;
+}
