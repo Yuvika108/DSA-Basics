@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void solve(){
+    int n;
+    cin >> n;
+
+    long long total_second_min_sum = 0;
+    int global_min = 2e9;
+    int min_second_val = 2e9;
+
+    for (int i = 0; i < n; ++i) {
+        int m;
+        cin >> m;
+        vector<int> a(m);
+        for (int j = 0; j < m; ++j) {
+            cin >> a[j];
+        }
+
+        sort(a.begin(), a.end());
+
+        global_min = min(global_min, a[0]);
+        min_second_val = min(min_second_val, a[1]);
+        total_second_min_sum += a[1];
+    }
+
+    if (n == 1) {
+        cout << global_min << "\n";
+    } else {
+        long long max_beauty = total_second_min_sum - min_second_val + global_min;
+        cout << max_beauty << "\n";
+    }
+}
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int t;
+    cin >> t;
+    
+    while(t--){
+        solve();
+    }
+    
+    return 0;
+}
