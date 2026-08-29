@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void solve() {
+    int n;
+    long long p;
+    cin >> n >> p;
+
+    vector<long long> a(n);
+    vector<long long> b(n);
+
+    for (int i = 0; i < n; i++) cin >> a[i];
+    for (int i = 0; i < n; i++) cin >> b[i];
+
+    vector<pair<long long, long long>> residents(n);
+    for (int i = 0; i < n; i++) {
+        residents[i] = {b[i], a[i]};
+    }
+
+    sort(residents.begin(), residents.end());
+
+    long long total_cost = p;
+    long long remaining = n - 1;
+
+    for (int i = 0; i < n; i++) {
+        if (remaining <= 0) break;
+        
+        if (residents[i].first >= p) {
+            break;
+        }
+
+        long long take = min(remaining, residents[i].second);
+        total_cost += take * residents[i].first;
+        remaining -= take;
+    }
+
+    if (remaining > 0) {
+        total_cost += remaining * p;
+    }
+
+    cout << total_cost << "\n";
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
