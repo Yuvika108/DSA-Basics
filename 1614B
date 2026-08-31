@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void solve() {
+    int n;
+    cin >> n;
+    
+    // Store pairs of (visit_count, original_index)
+    vector<pair<long long, int>> a(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i].first;
+        a[i].second = i + 1; // 1-based indexing for buildings 1 to n
+    }
+    
+    // Sort in descending order of visit frequency
+    sort(a.rbegin(), a.rend());
+    
+    vector<long long> ans(n + 1);
+    ans[0] = 0; // Set headquarters at 0
+    
+    long long total_time = 0;
+    long long offset = 1;
+    
+    for (int i = 0; i < n; ++i) {
+        long long dist = offset;
+        long long coord = (i % 2 == 0) ? offset : -offset;
+        
+        ans[a[i].second] = coord;
+        total_time += 2 * dist * a[i].first;
+        
+        if (i % 2 == 1) {
+            offset++;
+        }
+    }
+    
+    // Output total minimum time
+    cout << total_time << "\n";
+    
+    // Output coordinates from x_0 to x_n
+    for (int i = 0; i <= n; ++i) {
+        cout << ans[i] << (i == n ? "" : " ");
+    }
+    cout << "\n";
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
+    
+    return 0;
+}
